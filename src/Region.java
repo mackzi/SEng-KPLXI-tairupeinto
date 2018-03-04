@@ -10,7 +10,7 @@ public class Region {
     private boolean isMarked;
     private int id;
 
-    public Region(int id, int[][] boardRegions){
+    Region(int id, int[][] boardRegions){
         cells = new ArrayList<>();
         for(int rows = 0; rows<boardRegions.length; rows++){
             for(int cols = 0; cols <boardRegions.length; cols++){
@@ -25,20 +25,20 @@ public class Region {
     private Cell buildCell(int rows, int cols, int[][] boardRegions){
         Cell c = new Cell(rows, cols);
         if (rows == 0)
-            c.drawBorderTop(4);
+            c.drawBorderTop();
         if (rows == 8)
-            c.drawBorderBottom(4);
+            c.drawBorderBottom();
         if (cols == 0)
-            c.drawBorderLeft(4);
+            c.drawBorderLeft();
         if (cols == 8)
-            c.drawBorderRight(4);
+            c.drawBorderRight();
         if(rows < 8){
             if(boardRegions[rows][cols]!= boardRegions[rows+1][cols])
-                c.drawBorderBottom(4);
+                c.drawBorderBottom();
         }
         if(cols < 8){
             if(boardRegions[rows][cols]!= boardRegions[rows][cols+1])
-                c.drawBorderRight(4);
+                c.drawBorderRight();
         }
         return c;
     }
@@ -49,5 +49,4 @@ public class Region {
             c.setMarked(true);
         }
     }
-
 }

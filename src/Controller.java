@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
 
-    Board board;
+    private Board board;
 
     @FXML
     Button runButton;

@@ -21,11 +21,14 @@ public class Cell extends javafx.scene.layout.Pane{
 
     public Cell(int rows, int cols){
         super();
-        super.setStyle("-fx-background-color: lightgray;");
+        super.setStyle("-fx-background-color: #f7f7f7;");
         this.cols = cols;
         this.rows = rows;
         isMarked = false;
-        drawBorder(1, 1, 1, 1);
+        topBorder=1;
+        rightBorder=1;
+        bottomBorder=1;
+        leftBorder=1;
     }
 
 
@@ -35,44 +38,33 @@ public class Cell extends javafx.scene.layout.Pane{
 
     public void setMarked(boolean marked) {
         isMarked = marked;
-        super.setStyle("-fx-background-color: grey");
+        super.setStyle("-fx-background-color: #636363");
     }
 
-    public void drawBorder( int top, int right, int bottom, int left){
-        if(left>=0 && top>=0 && right>=0 &&bottom>=0){
-            super.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(top,right,bottom,left))));
-            topBorder=top;
-            rightBorder=right;
-            bottomBorder=bottom;
-            leftBorder=left;
-        }
+    public void drawBorderLeft(){
+        leftBorder= Configuration.BORDER_THINKNESS;
+        drawBorder();
     }
 
-    public void drawBorderLeft(int left){
-        if(left>=0){
-            super.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(topBorder,rightBorder,bottomBorder,left))));
-            leftBorder=left;
-        }
+    public void drawBorderTop(){
+        topBorder=Configuration.BORDER_THINKNESS;
+        drawBorder();
     }
 
-    public void drawBorderTop(int top){
-        if(top>=0){
-            super.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(top,rightBorder,bottomBorder,leftBorder))));
-            topBorder=top;
-        }
+    public void drawBorderRight(){
+        rightBorder=Configuration.BORDER_THINKNESS;
+        drawBorder();
     }
 
-    public void drawBorderRight(int right){
-        if(right>=0){
-            super.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(topBorder,right,bottomBorder,leftBorder))));
-            rightBorder=right;
-        }
+    public void drawBorderBottom(){
+        bottomBorder= Configuration.BORDER_THINKNESS;
+        drawBorder();
     }
 
-    public void drawBorderBottom(int bottom){
-        if(bottom>=0){
-            super.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(topBorder,rightBorder,bottom,leftBorder))));
-            bottomBorder= bottom;
-        }
+    private void drawBorder(){
+        super.setBorder(new Border(new BorderStroke(Color.BLACK,
+                                                    BorderStrokeStyle.SOLID,
+                                                    CornerRadii.EMPTY,
+                                    new BorderWidths(topBorder,rightBorder,bottomBorder,leftBorder))));
     }
 }
