@@ -40,6 +40,14 @@ public class Region {
             if(boardRegions[rows][cols]!= boardRegions[rows][cols+1])
                 c.drawBorderRight();
         }
+        if(rows > 0){
+            if(boardRegions[rows][cols]!= boardRegions[rows-1][cols])
+                c.drawBorderTop();
+        }
+        if(cols > 0){
+            if(boardRegions[rows][cols]!= boardRegions[rows][cols-1])
+                c.drawBorderLeft();
+        }
         return c;
     }
 

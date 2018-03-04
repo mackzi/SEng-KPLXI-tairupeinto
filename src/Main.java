@@ -11,6 +11,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
         primaryStage.setTitle("KPLXI - Tairupeinto");
         primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

@@ -4,7 +4,8 @@ import javafx.scene.paint.Color;
 public class Cell extends javafx.scene.layout.Pane{
 
     private boolean isMarked;
-
+    private int cols, rows;
+    private int topBorder,rightBorder,bottomBorder,leftBorder;
 
     public int getCols() {
         return cols;
@@ -14,27 +15,22 @@ public class Cell extends javafx.scene.layout.Pane{
         return rows;
     }
 
-    private int cols, rows;
+    public boolean isMarked() {
+        return isMarked;
+    }
 
-
-    private int topBorder,rightBorder,bottomBorder,leftBorder;
-
-    public Cell(int rows, int cols){
+    Cell(int rows, int cols){
         super();
         super.setStyle("-fx-background-color: #f7f7f7;");
         this.cols = cols;
         this.rows = rows;
-        isMarked = false;
-        topBorder=1;
-        rightBorder=1;
-        bottomBorder=1;
-        leftBorder=1;
+        isMarked  = false;
+        topBorder    = 1;
+        rightBorder  = 1;
+        bottomBorder = 1;
+        leftBorder   = 1;
     }
 
-
-    public boolean isMarked() {
-        return isMarked;
-    }
 
     public void setMarked(boolean marked) {
         isMarked = marked;
@@ -42,29 +38,33 @@ public class Cell extends javafx.scene.layout.Pane{
     }
 
     public void drawBorderLeft(){
-        leftBorder= Configuration.BORDER_THINKNESS;
+        leftBorder= Configuration.BORDER_SIZE;
         drawBorder();
     }
 
     public void drawBorderTop(){
-        topBorder=Configuration.BORDER_THINKNESS;
+        topBorder=Configuration.BORDER_SIZE;
         drawBorder();
     }
 
     public void drawBorderRight(){
-        rightBorder=Configuration.BORDER_THINKNESS;
+        rightBorder=Configuration.BORDER_SIZE;
         drawBorder();
     }
 
     public void drawBorderBottom(){
-        bottomBorder= Configuration.BORDER_THINKNESS;
+        bottomBorder= Configuration.BORDER_SIZE;
         drawBorder();
     }
 
     private void drawBorder(){
-        super.setBorder(new Border(new BorderStroke(Color.BLACK,
-                                                    BorderStrokeStyle.SOLID,
-                                                    CornerRadii.EMPTY,
-                                    new BorderWidths(topBorder,rightBorder,bottomBorder,leftBorder))));
+        super.setBorder(new Border(
+                        new BorderStroke(Color.BLACK,
+                                        BorderStrokeStyle.SOLID,
+                                        CornerRadii.EMPTY,
+                                        new BorderWidths(topBorder,
+                                                        rightBorder,
+                                                        bottomBorder,
+                                                        leftBorder))));
     }
 }
