@@ -15,4 +15,40 @@ public class Board {
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
         }
     }
+
+    public int[] evaluateRowValues(){
+        int[] rowValues = new int[9];
+        for (Region r: regions) {
+            for (Cell c: r.getCells()) {
+                if(c.isMarked())
+                    countMarkedCells(c.getRows(), rowValues);
+            }
+        }
+        return rowValues;
+    }
+
+    public int[] evaluateColValues(){
+        int[] colValues = new int[9];
+        for (Region r: regions) {
+            for (Cell c: r.getCells()) {
+                if(c.isMarked())
+                    countMarkedCells(c.getCols(), colValues);
+            }
+        }
+        return colValues;
+    }
+
+    private void countMarkedCells(int index, int[] values){
+        switch (index){
+            case 0: values[0] += 1; break;
+            case 1: values[1] += 1; break;
+            case 2: values[2] += 1; break;
+            case 3: values[3] += 1; break;
+            case 4: values[4] += 1; break;
+            case 5: values[5] += 1; break;
+            case 6: values[6] += 1; break;
+            case 7: values[7] += 1; break;
+            case 8: values[8] += 1; break;
+        }
+    }
 }

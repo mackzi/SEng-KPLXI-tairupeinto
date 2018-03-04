@@ -35,43 +35,14 @@ public class Controller implements Initializable{
     }
 
     public void updateLabels(){
-        int[] rowValues = new int[9];
-        int[] colValues = new int[9];
+        int[] rowValues = board.evaluateRowValues();
+        int[] colValues = board.evaluateColValues();
 
         Label[] rowLabels = new Label[]{labelRow0, labelRow1, labelRow2, labelRow3, labelRow4, labelRow5, labelRow6, labelRow7, labelRow8};
         Label[] colLabels = new Label[]{labelCol0, labelCol1, labelCol2, labelCol3, labelCol4, labelCol5, labelCol6, labelCol7, labelCol8};
 
         int[] rowSolution = Configuration.ROW_SOLUTION;
         int[] colSolution = Configuration.COL_SOLUTION;
-
-        for (Region r: board.getRegions()) {
-            for (Cell c: r.getCells()) {
-                if(c.isMarked()){
-                    switch (c.getCols()){
-                        case 0: colValues[0] += 1; break;
-                        case 1: colValues[1] += 1; break;
-                        case 2: colValues[2] += 1; break;
-                        case 3: colValues[3] += 1; break;
-                        case 4: colValues[4] += 1; break;
-                        case 5: colValues[5] += 1; break;
-                        case 6: colValues[6] += 1; break;
-                        case 7: colValues[7] += 1; break;
-                        case 8: colValues[8] += 1; break;
-                    }
-                    switch (c.getRows()){
-                        case 0: rowValues[0] += 1; break;
-                        case 1: rowValues[1] += 1; break;
-                        case 2: rowValues[2] += 1; break;
-                        case 3: rowValues[3] += 1; break;
-                        case 4: rowValues[4] += 1; break;
-                        case 5: rowValues[5] += 1; break;
-                        case 6: rowValues[6] += 1; break;
-                        case 7: rowValues[7] += 1; break;
-                        case 8: rowValues[8] += 1; break;
-                    }
-                }
-            }
-        }
 
         for(int i = 0; i < 9; i++){
             rowLabels[i].setText(String.valueOf(rowValues[i]));
@@ -87,7 +58,7 @@ public class Controller implements Initializable{
         board.getRegions().get(0).markRegion();
         board.getRegions().get(2).markRegion();
         board.getRegions().get(4).markRegion();
-        board.getRegions().get(5).markRegion();
+        //board.getRegions().get(5).markRegion();
         board.getRegions().get(7).markRegion();
         board.getRegions().get(8).markRegion();
         board.getRegions().get(13).markRegion();

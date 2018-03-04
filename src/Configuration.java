@@ -1,5 +1,9 @@
+import random.MersenneTwisterFast;
+
 public enum Configuration {
     instance;
+
+    MersenneTwisterFast random = new MersenneTwisterFast();
 
     public static final int BORDER_SIZE = 3;
     public static final int NUMBER_OF_REGIONS = 28;
