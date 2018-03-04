@@ -34,7 +34,10 @@ public class Cell extends javafx.scene.layout.Pane{
 
     public void setMarked(boolean marked) {
         isMarked = marked;
-        super.setStyle("-fx-background-color: #636363");
+        if(marked)
+            super.setStyle("-fx-background-color: #636363");
+        else
+            super.setStyle("-fx-background-color: #f7f7f7;");
     }
 
     public void drawBorderLeft(){

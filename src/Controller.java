@@ -10,8 +10,6 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
 
-    private Board board;
-
     @FXML
     Button runButton;
 
@@ -26,7 +24,11 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        board = new Board();
+        updateBoard(new Board());
+    }
+
+    public void updateBoard(Board board){
+        gridPane.getChildren().clear();
         for (Region r: board.getRegions()) {
             for (Cell c: r.getCells()) {
                 gridPane.add(c, c.getCols(), c.getRows());
@@ -34,7 +36,7 @@ public class Controller implements Initializable{
         }
     }
 
-    public void updateLabels(){
+    public void updateLabels(Board board){
         int[] rowValues = board.evaluateRowValues();
         int[] colValues = board.evaluateColValues();
 
@@ -49,25 +51,18 @@ public class Controller implements Initializable{
             colLabels[i].setText(String.valueOf(colValues[i]));
             if(rowValues[i] == rowSolution[i])
                 rowLabels[i].setTextFill(Color.GREEN);
+            else
+                rowLabels[i].setTextFill(Color.DARKRED);
             if(colValues[i] == colSolution[i])
                 colLabels[i].setTextFill(Color.GREEN);
+            else
+                colLabels[i].setTextFill(Color.DARKRED);
         }
     }
 
-    public void execute(){
-        board.getRegions().get(0).markRegion();
-        board.getRegions().get(2).markRegion();
-        board.getRegions().get(4).markRegion();
-        board.getRegions().get(5).markRegion();
-        board.getRegions().get(7).markRegion();
-        board.getRegions().get(8).markRegion();
-        board.getRegions().get(13).markRegion();
-        board.getRegions().get(14).markRegion();
-        board.getRegions().get(17).markRegion();
-        board.getRegions().get(19).markRegion();
-        board.getRegions().get(23).markRegion();
-        board.getRegions().get(24).markRegion();
-        board.getRegions().get(25).markRegion();
-        updateLabels();
+    @FXML
+    public void execute() {
+        EvaHandler eva = new EvaHandler(this);
+        eva.execute();
     }
 }

@@ -57,4 +57,11 @@ public class Region {
             c.setMarked(true);
         }
     }
+
+    public void unMarkRegion(){
+        isMarked = false;
+        for (Cell c: cells) {
+            c.setMarked(false);
+        }
+    }
 }
