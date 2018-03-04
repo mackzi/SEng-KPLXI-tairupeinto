@@ -58,7 +58,7 @@ public class Controller implements Initializable{
         board.getRegions().get(0).markRegion();
         board.getRegions().get(2).markRegion();
         board.getRegions().get(4).markRegion();
-        //board.getRegions().get(5).markRegion();
+        board.getRegions().get(5).markRegion();
         board.getRegions().get(7).markRegion();
         board.getRegions().get(8).markRegion();
         board.getRegions().get(13).markRegion();
