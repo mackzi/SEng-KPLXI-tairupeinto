@@ -28,7 +28,7 @@ public class EvaHandler implements Runnable{
             evaThread = Thread.currentThread();
             while (!Thread.currentThread().isInterrupted()) {
                 Platform.runLater(this::execute);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
         } catch (InterruptedException e) {
             System.out.println(e);
@@ -53,14 +53,26 @@ public class EvaHandler implements Runnable{
         guiController.updateBoard(population.get(bestFitnessIndex));
         guiController.showBestFitness(bestFitness);
         guiController.showCurrentGeneration(generation);
-
+/*
         //SELECTION
+        ArrayList<Board> selectedBoards;
+        ISelection selection = new TournamentSelection();
+
+        selectedBoards = selection.doSelection(population);
 
         //CROSSOVER
-
+        ICrossover crossover = new UniformCrossover();
+        for(int i = 0; i< selectedBoards.size()/2; i++) {
+            Board parent1 = selectedBoards.get(Configuration.instance.random.nextInt(0, selectedBoards.size() - 1));
+            selectedBoards.remove(parent1);
+            Board parent2 = selectedBoards.get(Configuration.instance.random.nextInt(0, selectedBoards.size() - 1));
+            selectedBoards.remove(parent2);
+            population.addAll(crossover.doCrossover(parent1, parent2));
+        }
         //MUTATION
 
-
+*/
+        System.out.println(population.size());
         generation += 1;
         if(bestFitness == 0)
             evaThread.interrupt();

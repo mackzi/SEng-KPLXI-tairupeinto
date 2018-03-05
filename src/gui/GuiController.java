@@ -83,9 +83,9 @@ public class GuiController implements Initializable{
 
     @FXML
     public void execute() {
-        EvaHandler eva = new EvaHandler(this);
-        evaThread = new Thread(eva);
-        evaThread.start();
+        //EvaHandler eva = new EvaHandler(this);
+        //evaThread = new Thread(eva);
+        //evaThread.start();
     }
 
     @FXML
