@@ -303,5 +303,6 @@
       </GridPane>
       <Button fx:id="stopButton" layoutX="101.0" layoutY="25.0" mnemonicParsing="false" onAction="#stop" text="Stop" />
       <Label fx:id="labelFitness" layoutX="314.0" layoutY="29.0" prefHeight="17.0" prefWidth="108.0" text="Fitness: " />
+      <Label fx:id="labelGeneration" layoutX="394.0" layoutY="29.0" text="Generation: " />
    </children>
 </Pane>

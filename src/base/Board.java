@@ -8,13 +8,21 @@ public class Board {
 
     private ArrayList<Region> regions;
 
+    public Board(ArrayList<Boolean> genesForChild) {
+        regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
+        for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
+            regions.add(new Region(i, Configuration.BOARD_REGIONS));
+            if(genesForChild.get(i))
+                regions.get(0).markRegion();
+        }
+    }
+
     public ArrayList<Region> getRegions() {
         return regions;
     }
 
     public Board(){
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
-
         for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
         }
@@ -63,5 +71,16 @@ public class Board {
             case 7: values[7] += 1; break;
             case 8: values[8] += 1; break;
         }
+    }
+
+    public ArrayList<Boolean> getGenes() {
+        ArrayList<Boolean> genes = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
+        for (Region region : regions) {
+            if (region.isMarked())
+                genes.add(true);
+            else
+                genes.add(false);
+        }
+        return genes;
     }
 }
