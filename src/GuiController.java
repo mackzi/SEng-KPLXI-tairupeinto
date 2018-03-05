@@ -8,13 +8,18 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable{
+public class GuiController implements Initializable{
+
+    private Thread evaThread;
 
     @FXML
-    Button runButton;
+    Button runButton, stopButton;
 
     @FXML
     GridPane gridPane;
+
+    @FXML
+    Label labelFitness;
 
     @FXML
     Label labelRow0, labelRow1, labelRow2, labelRow3, labelRow4, labelRow5, labelRow6, labelRow7, labelRow8;
@@ -27,6 +32,10 @@ public class Controller implements Initializable{
         updateBoard(new Board());
     }
 
+    public void showCurrentFitness(int fitness) {
+        labelFitness.setText("Fitness: " + fitness);
+    }
+
     public void updateBoard(Board board){
         gridPane.getChildren().clear();
         for (Region r: board.getRegions()) {
@@ -34,9 +43,10 @@ public class Controller implements Initializable{
                 gridPane.add(c, c.getCols(), c.getRows());
             }
         }
+        updateLabels(board);
     }
 
-    public void updateLabels(Board board){
+    private void updateLabels(Board board){
         int[] rowValues = board.evaluateRowValues();
         int[] colValues = board.evaluateColValues();
 
@@ -52,17 +62,23 @@ public class Controller implements Initializable{
             if(rowValues[i] == rowSolution[i])
                 rowLabels[i].setTextFill(Color.GREEN);
             else
-                rowLabels[i].setTextFill(Color.DARKRED);
+                rowLabels[i].setTextFill(Color.RED);
             if(colValues[i] == colSolution[i])
                 colLabels[i].setTextFill(Color.GREEN);
             else
-                colLabels[i].setTextFill(Color.DARKRED);
+                colLabels[i].setTextFill(Color.RED);
         }
     }
 
     @FXML
     public void execute() {
         EvaHandler eva = new EvaHandler(this);
-        eva.execute();
+        evaThread = new Thread(eva);
+        evaThread.start();
+    }
+
+    @FXML
+    public void stop() {
+        evaThread.interrupt();
     }
 }

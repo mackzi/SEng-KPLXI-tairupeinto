@@ -1,26 +1,39 @@
-public class EvaHandler {
-    Controller controller;
+import javafx.application.Platform;
 
-    EvaHandler(Controller controller){
-        this.controller = controller;
+public class EvaHandler implements Runnable{
+    GuiController guiController;
+    private Thread evaThread;
+
+    EvaHandler(GuiController guiController){
+        this.guiController = guiController;
     }
 
-    public void execute(){
-        //for(int i = 0; i<100; i++) {
+    @Override
+    public void run() {
+        try {
+            evaThread = Thread.currentThread();
+            while (!Thread.currentThread().isInterrupted()) {
+                Platform.runLater(this::execute);
+                Thread.sleep(100);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+            Thread.currentThread().interrupt();
+            evaThread.interrupt();
+        }
+    }
+
+    private void execute(){
             Board board = new Board();
             for (int j = 0; j < Configuration.NUMBER_OF_REGIONS; j++) {
                 if (Configuration.instance.random.nextBoolean())
                     board.getRegions().get(j).markRegion();
             }
-            controller.updateBoard(board);
-            controller.updateLabels(board);
-            /*
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
-        //}
+            guiController.updateBoard(board);
+            guiController.showCurrentFitness(board.evaluateFitness());
+            if(board.evaluateFitness() == 0)
+                evaThread.interrupt();
     }
+
+
 }

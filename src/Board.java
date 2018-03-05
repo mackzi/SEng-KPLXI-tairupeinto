@@ -16,6 +16,15 @@ public class Board {
         }
     }
 
+    public int evaluateFitness(){
+        int fitness = 0;
+        for(int i = 0; i < 9; i++) {
+            fitness += Math.abs(evaluateColValues()[i] - Configuration.COL_SOLUTION[i]);
+            fitness += Math.abs(evaluateRowValues()[i] - Configuration.ROW_SOLUTION[i]);
+        }
+        return fitness;
+    }
+
     public int[] evaluateRowValues(){
         int[] rowValues = new int[9];
         for (Region r: regions) {
