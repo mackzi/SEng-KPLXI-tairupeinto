@@ -53,14 +53,6 @@ public class EvaHandler implements Runnable{
         guiController.updateBoard(population.get(bestFitnessIndex));
         guiController.showBestFitness(bestFitness);
         guiController.showCurrentGeneration(generation);
-
-        //SELECTION
-
-        //CROSSOVER
-
-        //MUTATION
-
-
         generation += 1;
         if(bestFitness == 0)
             evaThread.interrupt();
