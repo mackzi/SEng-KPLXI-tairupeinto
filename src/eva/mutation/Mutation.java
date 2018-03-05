@@ -1,4 +1,4 @@
-package mutation;
+package eva.mutation;
 
 import config.Configuration;
 import config.MersenneTwisterFast;

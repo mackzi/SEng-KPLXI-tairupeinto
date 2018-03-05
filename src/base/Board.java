@@ -8,6 +8,12 @@ public class Board {
 
     private ArrayList<Region> regions;
 
+    public int[][] getBoardRegions() {
+        return boardRegions;
+    }
+
+    private int[][] boardRegions;
+
     public Board(ArrayList<Boolean> genesForChild) {
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
         for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
@@ -22,10 +28,25 @@ public class Board {
     }
 
     public Board(){
+        boardRegions = Configuration.BOARD_REGIONS;
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
         for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
         }
+    }
+
+    public boolean isSolved(){
+        return evaluateFitness() == 0;
+    }
+
+    public boolean isValid(){
+        for(int i = 0; i < 9; i++) {
+            if( evaluateColValues()[i] > Configuration.COL_SOLUTION[i] ||
+                evaluateRowValues()[i] > Configuration.ROW_SOLUTION[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int evaluateFitness(){

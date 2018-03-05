@@ -15,6 +15,11 @@ public class Region {
     }
 
     private boolean isMarked;
+
+    public int getId() {
+        return id;
+    }
+
     private int id;
 
     Region(int id, int[][] boardRegions){

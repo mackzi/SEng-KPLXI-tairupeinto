@@ -1,8 +1,8 @@
-package mutation;
+package eva.mutation;
 
 import base.Board;
 
-public class InsertionMutation extends mutation.DisplacementMutation implements IMutation {
+public class InsertionMutation extends eva.mutation.DisplacementMutation implements IMutation {
 
     @Override
     public Board doMutation(Board Board) {

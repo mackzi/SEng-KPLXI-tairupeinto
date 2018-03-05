@@ -1,13 +1,18 @@
 package gui;
 
+import backtrack.BacktrackHandler;
 import base.Board;
 import base.Cell;
 import base.Region;
 import config.Configuration;
 import eva.EvaHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -17,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class GuiController implements Initializable{
 
-    private Thread evaThread;
+    private Thread evaThread, backtrackThread;
 
     @FXML
     Button runButton, stopButton;
@@ -29,6 +34,9 @@ public class GuiController implements Initializable{
     Label labelFitness, labelGeneration;
 
     @FXML
+    ChoiceBox<String> cBoxSelection, cBoxCrossover, cBoxMutation;
+
+    @FXML
     Label labelRow0, labelRow1, labelRow2, labelRow3, labelRow4, labelRow5, labelRow6, labelRow7, labelRow8;
 
     @FXML
@@ -37,6 +45,12 @@ public class GuiController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateBoard(new Board());
+        cBoxSelection.getItems().addAll("Tournament", "RouletteWheel");
+        cBoxSelection.setValue("Tournament");
+        cBoxCrossover.getItems().addAll("OnePoint", "TwoPoint", "K-Point", "Uniform");
+        cBoxCrossover.setValue("OnePoint");
+        cBoxMutation.getItems().addAll("Displacement", "Exchange", "Insertion", "Inversion", "Scramble");
+        cBoxMutation.setValue("Displacement");
     }
 
     public void showBestFitness(int fitness) {
@@ -83,13 +97,26 @@ public class GuiController implements Initializable{
 
     @FXML
     public void execute() {
-        EvaHandler eva = new EvaHandler(this);
-        evaThread = new Thread(eva);
-        evaThread.start();
+        runButton.setDisable(true);
+        //startEva();
+        startBacktrack();
     }
 
     @FXML
     public void stop() {
-        evaThread.interrupt();
+        runButton.setDisable(false);
+        //evaThread.interrupt();
+        backtrackThread.interrupt();
+    }
+
+    private void startEva(){
+        EvaHandler eva = new EvaHandler(this);
+        evaThread = new Thread(eva);
+        evaThread.start();
+    }
+    private void startBacktrack() {
+        BacktrackHandler backtrack = new BacktrackHandler(this);
+        backtrackThread = new Thread(backtrack);
+        backtrackThread.start();
     }
 }

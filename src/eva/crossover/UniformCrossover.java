@@ -1,4 +1,4 @@
-package crossover;
+package eva.crossover;
 
 import java.util.ArrayList;
 import base.Board;
@@ -10,7 +10,7 @@ public class UniformCrossover implements ICrossover {
     private static final int MAXNUMBER_OF_ITERATIONS = 10000;
 
     /**
-     * Does a crossover based on a coinflip on every gene
+     * Does a eva.crossover based on a coinflip on every gene
      * @param parent1
      * @param parent2
      * @return children

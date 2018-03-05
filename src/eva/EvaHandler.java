@@ -2,15 +2,14 @@ package eva;
 
 import base.Board;
 import config.Configuration;
-import crossover.ICrossover;
-import crossover.OnePointCrossover;
-import crossover.UniformCrossover;
+import eva.crossover.ICrossover;
+import eva.crossover.OnePointCrossover;
 import gui.GuiController;
 import javafx.application.Platform;
-import mutation.DisplacementMutation;
-import mutation.IMutation;
-import selection.ISelection;
-import selection.TournamentSelection;
+import eva.mutation.DisplacementMutation;
+import eva.mutation.IMutation;
+import eva.selection.ISelection;
+import eva.selection.TournamentSelection;
 
 import java.util.ArrayList;
 

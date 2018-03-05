@@ -1,4 +1,4 @@
-package crossover;
+package eva.crossover;
 
 import base.Board;
 
