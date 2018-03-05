@@ -1,3 +1,11 @@
+package gui;
+
+import base.Board;
+import base.Cell;
+import base.Region;
+import config.Configuration;
+
+import eva.EvaHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

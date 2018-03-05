@@ -1,3 +1,4 @@
+package config;
 
 public enum Configuration {
     instance;

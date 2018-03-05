@@ -1,10 +1,16 @@
+package eva;
+
+import base.Board;
+import config.Configuration;
+
+import gui.GuiController;
 import javafx.application.Platform;
 
 public class EvaHandler implements Runnable{
     GuiController guiController;
     private Thread evaThread;
 
-    EvaHandler(GuiController guiController){
+    public EvaHandler(GuiController guiController){
         this.guiController = guiController;
     }
 

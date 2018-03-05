@@ -1,3 +1,4 @@
+package config;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,3 +1,7 @@
+package base;
+
+import config.Configuration;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -8,10 +12,10 @@ public class Board {
         return regions;
     }
 
-    Board(){
+    public Board(){
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
 
-        for(int i = 0; i<Configuration.NUMBER_OF_REGIONS; i++){
+        for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
         }
     }
