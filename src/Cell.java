@@ -1,6 +1,3 @@
-package base;
-
-import config.Configuration;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -49,12 +46,12 @@ public class Cell extends javafx.scene.layout.Pane{
     }
 
     public void drawBorderTop(){
-        topBorder= Configuration.BORDER_SIZE;
+        topBorder=Configuration.BORDER_SIZE;
         drawBorder();
     }
 
     public void drawBorderRight(){
-        rightBorder= Configuration.BORDER_SIZE;
+        rightBorder=Configuration.BORDER_SIZE;
         drawBorder();
     }
 

@@ -1,11 +1,8 @@
-package config;
 
 public enum Configuration {
     instance;
 
     public MersenneTwisterFast random = new MersenneTwisterFast(System.currentTimeMillis());
-
-    public static final int INITIAL_POPULATION_SIZE = 100;
 
     public static final int BORDER_SIZE = 3;
     public static final int NUMBER_OF_REGIONS = 28;

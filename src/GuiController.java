@@ -1,10 +1,3 @@
-package gui;
-
-import base.Board;
-import base.Cell;
-import base.Region;
-import config.Configuration;
-import eva.EvaHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,7 +19,7 @@ public class GuiController implements Initializable{
     GridPane gridPane;
 
     @FXML
-    Label labelFitness, labelGeneration;
+    Label labelFitness;
 
     @FXML
     Label labelRow0, labelRow1, labelRow2, labelRow3, labelRow4, labelRow5, labelRow6, labelRow7, labelRow8;
@@ -39,12 +32,8 @@ public class GuiController implements Initializable{
         updateBoard(new Board());
     }
 
-    public void showBestFitness(int fitness) {
+    public void showCurrentFitness(int fitness) {
         labelFitness.setText("Fitness: " + fitness);
-    }
-
-    public void showCurrentGeneration(int generation) {
-        labelGeneration.setText("Generation: " + generation);
     }
 
     public void updateBoard(Board board){
