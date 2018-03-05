@@ -1,3 +1,5 @@
+package base;
+
 import java.util.ArrayList;
 
 public class Region {
@@ -7,6 +9,11 @@ public class Region {
     }
 
     private ArrayList<Cell> cells;
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
     private boolean isMarked;
     private int id;
 
