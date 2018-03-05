@@ -5,11 +5,12 @@ public enum Configuration {
 
     public MersenneTwisterFast random = new MersenneTwisterFast(System.currentTimeMillis());
 
-    public static final int INITIAL_POPULATION_SIZE = 100;
+    public static final int INITIAL_POPULATION_SIZE = 2048;
 
     public int maximumNumberOfGenerations = 100_000;
     public int maximumNumberOfStaleGenerations = 2_000;
     public int populationSize = 2_048;
+    public int maxPopulationSize = 4096;
     public int tournamentParticipants = 52;
     public int rouletteLimit = 26;
 

@@ -2,8 +2,15 @@ package eva;
 
 import base.Board;
 import config.Configuration;
+import crossover.ICrossover;
+import crossover.OnePointCrossover;
+import crossover.UniformCrossover;
 import gui.GuiController;
 import javafx.application.Platform;
+import mutation.DisplacementMutation;
+import mutation.IMutation;
+import selection.ISelection;
+import selection.TournamentSelection;
 
 import java.util.ArrayList;
 
@@ -54,15 +61,14 @@ public class EvaHandler implements Runnable{
         guiController.updateBoard(population.get(bestFitnessIndex));
         guiController.showBestFitness(bestFitness);
         guiController.showCurrentGeneration(generation);
-/*
+
         //SELECTION
         ArrayList<Board> selectedBoards;
         ISelection selection = new TournamentSelection();
-
         selectedBoards = selection.doSelection(population);
 
         //CROSSOVER
-        ICrossover crossover = new UniformCrossover();
+        ICrossover crossover = new OnePointCrossover();
         for(int i = 0; i< selectedBoards.size()/2; i++) {
             Board parent1 = selectedBoards.get(Configuration.instance.random.nextInt(0, selectedBoards.size() - 1));
             selectedBoards.remove(parent1);
@@ -71,12 +77,29 @@ public class EvaHandler implements Runnable{
             population.addAll(crossover.doCrossover(parent1, parent2));
         }
         //MUTATION
+        IMutation mutation = new DisplacementMutation();
+        population.add(mutation.doMutation(population.get(Configuration.instance.random.nextInt(0, population.size()-1))));
 
-*/
+        if(population.size() > Configuration.instance.maxPopulationSize){
+            doPest();
+        }
+
         System.out.println("PopulationSize: " + population.size());
         generation += 1;
         if(bestFitness == 0)
             evaThread.interrupt();
+    }
+
+    private void doPest(){
+        int sum = 0;
+        for (Board b: population) {
+            sum += b.evaluateFitness();
+        }
+        sum = sum / population.size();
+        for (int i = 0; i < population.size(); i++) {
+            if(population.get(i).evaluateFitness() >= sum)
+                population.remove(population.get(i));
+        }
     }
 
     private void evaluateBestFitnessIndex(){

@@ -12,8 +12,8 @@ public class InsertionMutation extends mutation.DisplacementMutation implements 
         Board mutated;
         do{
             int location = random.nextInt(0, GENE_SIZE - 1);
-            int destinaton = random.nextInt(0, GENE_SIZE);
-            mutated = displace(Board, location, destinaton, 1);
+            int destination = random.nextInt(0, GENE_SIZE);
+            mutated = displace(Board, location, destination, 1);
         }while (mutated == null || Board.equals(mutated));
         return mutated;
     }
