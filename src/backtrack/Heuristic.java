@@ -9,8 +9,18 @@ import java.util.*;
 public class Heuristic {
     Board board;
 
-    public Heuristic(Board board){
-        this.board = board;
+    public Heuristic(){
+        this.board = new Board();
+    }
+
+    public Set<Integer> doHeuristic(){
+        Set<Integer> result = new TreeSet<>();
+        for(int i = 0; i< 9; i++){
+            result.addAll(doRowHeuristic(i));
+            result.addAll(doColHeuristic(i));
+        }
+
+        return result;
     }
 
     public Set<Integer> doRowHeuristic(int row){

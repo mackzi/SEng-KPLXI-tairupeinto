@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -23,6 +20,10 @@ import java.util.ResourceBundle;
 public class GuiController implements Initializable{
 
     private Thread evaThread, backtrackThread;
+    private String executionType;
+
+    @FXML
+    RadioButton eva, bt;
 
     @FXML
     Button runButton, stopButton;
@@ -105,16 +106,30 @@ public class GuiController implements Initializable{
     @FXML
     public void stop() {
         runButton.setDisable(false);
-        //evaThread.interrupt();
-        backtrackThread.interrupt();
+
+        updateBoard(new Board());
+
+        if(executionType.equals("eva")){
+            evaThread.interrupt();
+            evaThread.stop();
+        }
+        if(executionType.equals("bt")){
+            backtrackThread.interrupt();
+            backtrackThread.stop();
+        }
+
+
     }
 
     private void startEva(){
+        executionType = "eva";
         EvaHandler eva = new EvaHandler(this);
         evaThread = new Thread(eva);
         evaThread.start();
     }
+
     private void startBacktrack() {
+        executionType = "bt";
         BacktrackHandler backtrack = new BacktrackHandler(this);
         backtrackThread = new Thread(backtrack);
         backtrackThread.start();

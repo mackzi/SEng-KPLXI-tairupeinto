@@ -27,11 +27,23 @@ public class Board {
         return regions;
     }
 
-    public Board(){
+    private void initBoard(){
         boardRegions = Configuration.BOARD_REGIONS;
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
         for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
+        }
+    }
+
+    public Board(){
+        initBoard();
+    }
+
+    public Board(Board board){
+        initBoard();
+        for(int i = 0; i<28; i++){
+            if(board.getRegions().get(i).isMarked())
+                regions.get(i).markRegion();
         }
     }
 

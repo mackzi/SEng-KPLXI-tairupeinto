@@ -7,87 +7,102 @@ import gui.Main;
 import javafx.application.Platform;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class BacktrackHandler implements Runnable{
+public class BacktrackHandler extends Thread{
 
     GuiController guiController;
     Thread backtrackThread;
-    Board board;
+    Board board, heuboard;
     int count;
+    int btCounter;
+
+    ArrayList<Integer> backtrackRegions;
 
     public BacktrackHandler(GuiController guiController){
+        setDaemon(true);
         this.guiController = guiController;
         board = new Board();
+        heuboard = new Board();
         count = 0;
+        btCounter = 0;
+        backtrackRegions = new ArrayList<>();
+        for(int i = 0; i<28; i++)
+            backtrackRegions.add(i);
     }
 
 
     @Override
     public void run() {
-        try {
-            backtrackThread = Thread.currentThread();
-            while (!Thread.currentThread().isInterrupted()) {
-                Platform.runLater(this::execute);
-                Thread.sleep(100);
+
+        execute();
+
+        while (!this.isInterrupted()){
+            Platform.runLater(() -> guiController.updateBoard(board));
+            try {
+                sleep(TimeUnit.SECONDS.toMillis(3));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BacktrackHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (InterruptedException e) {
-            System.out.println(e);
-            Thread.currentThread().interrupt();
-            backtrackThread.interrupt();
         }
     }
 
     private void execute(){
-        //while (!backtrack(board, 0))
-        //{}
         heuristic();
-        System.out.println("Fuck");
+        backtrack(0);
+            System.out.println("backtracking fertig " + btCounter);
+    }
 
-        guiController.updateBoard(board);
+    private void testGui(){
+        for(int i = 0; i< 100; i++){
+            if(Configuration.instance.random.nextBoolean())
+                board.getRegions().get(Configuration.instance.random.nextInt(0, 27)).markRegion();
+            else
+                board.getRegions().get(Configuration.instance.random.nextInt(0, 27)).unMarkRegion();
+        }
     }
 
     private void heuristic(){
-        //evaluate n choose k combinations for each row
-        //filter nonValid combinations
-        //look for congruence
+        Heuristic h = new Heuristic();
 
-        Heuristic h = new Heuristic(board);
-        //h.doColHeuristic(1);
-        for(int row = 0; row < 9; row++) {
-            for (Integer i : h.doRowHeuristic(row)) {
-                board.getRegions().get(i).markRegion();
-            }
+        for (Integer i : h.doHeuristic()) {
+            heuboard.getRegions().get(i).markRegion();
+            backtrackRegions.remove(i);
         }
-
-        for(int col = 0; col < 9; col++) {
-            for (Integer i : h.doColHeuristic(col)) {
-                board.getRegions().get(i).markRegion();
-            }
-        }
-
-        //look through cols
+        board = heuboard;
+        System.out.println(backtrackRegions);
     }
 
-    private boolean backtrack(Board b, int region){
-
+    private boolean backtrack(int index){
         count++;
-        //if(count % 1000 == 0)
-            System.out.println(count);
+        System.out.println(index);
 
-        //guiController.updateBoard(board);
-        if(b.isSolved()){
+        if(index == 28 && !board.isSolved())
+            return false;
+
+        if(board.isSolved()){
             return true;
         }
         else {
-            if(b.isValid()) {
-                b.getRegions().get(region).markRegion();
-                if (backtrack(b, region + 1))
+            if(isColoringValid(index, board)){
+                board.getRegions().get(index).markRegion();
+                if(backtrack(index + 1))
                     return true;
-                else
-                    b.getRegions().get(region).unMarkRegion();
+                else {
+                    board.getRegions().get(index).unMarkRegion();
+                    btCounter += 1;
+                }
             }
+            backtrack(index+1);
         }
-
         return false;
+    }
+
+    private boolean isColoringValid(int index, Board btBoard){
+        Board validCheckBoard = new Board(btBoard);
+        validCheckBoard.getRegions().get(index).markRegion();
+        return validCheckBoard.isValid();
     }
 }
