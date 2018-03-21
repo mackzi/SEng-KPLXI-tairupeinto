@@ -4,23 +4,19 @@ import java.util.ArrayList;
 
 public class Region {
 
-    public ArrayList<Cell> getCells() {
-        return cells;
-    }
-
     private ArrayList<Cell> cells;
+    private boolean isMarked;
+    private int id;
 
     public boolean isMarked() {
         return isMarked;
     }
 
-    private boolean isMarked;
+    public ArrayList<Cell> getCells() { return cells; }
 
     public int getId() {
         return id;
     }
-
-    private int id;
 
     Region(int id, int[][] boardRegions){
         cells = new ArrayList<>();

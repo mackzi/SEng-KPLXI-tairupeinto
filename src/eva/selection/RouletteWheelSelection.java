@@ -11,7 +11,7 @@ import config.Configuration;
  */
 public class RouletteWheelSelection implements ISelection {
     public ArrayList<Board> doSelection(ArrayList<Board> Boards) {
-        if (Boards.size() >= Configuration.instance.rouletteLimit) {
+        if (Boards.size() >= Configuration.instance.ROULETTE_LIMIT) {
             int sum = 0;
             float[] probability = new float[Boards.size() + 1];
             probability[0] = 0;
@@ -48,7 +48,7 @@ public class RouletteWheelSelection implements ISelection {
                 }
                 if (!alreadyRes)
                     result.add(Boards.get(selectedIndex));
-                int maxSelection = Configuration.instance.rouletteLimit;
+                int maxSelection = Configuration.instance.ROULETTE_LIMIT;
                 if ((result.size() == maxSelection))
                     maximumReached = true;
             }

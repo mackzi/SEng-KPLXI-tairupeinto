@@ -27,7 +27,7 @@ public class GuiController implements Initializable{
     RadioButton eva, bt;
 
     @FXML
-    Button runButton, stopButton, showSolution;
+    Button runButton, stopButton, showSolution, clearButton;
 
     @FXML
     GridPane gridPane;
@@ -99,6 +99,7 @@ public class GuiController implements Initializable{
 
     @FXML
     public void execute() {
+        updateBoard(new Board());
         runButton.setDisable(true);
         stopButton.setDisable(false);
         if(eva.isSelected())
@@ -110,10 +111,7 @@ public class GuiController implements Initializable{
     @FXML
     public void stop() {
         runButton.setDisable(false);
-        //updateBoard(new Board());
-        labelFitness.setText("Fitness: ");
-        labelGeneration.setText("Generation: ");
-
+        stopButton.setDisable(true);
         if(executionType.equals("eva")){
             evaThread.interrupt();
             evaThread.stop();
@@ -143,6 +141,23 @@ public class GuiController implements Initializable{
     }
 
     @FXML
+    private void clearBoard(){
+        updateBoard(new Board());
+        labelFitness.setText("Fitness: ");
+        labelGeneration.setText("Generation: ");
+    }
+
+    @FXML
+    private void showWarning(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("EVA Information");
+        alert.setHeaderText(null);
+        alert.setContentText("Evolutionary Algorithm is not suitable for this kind of problem!!!");
+
+        alert.showAndWait();
+    }
+
+    @FXML
     private void showSolution() {
         Board solution = new Board();
         solution.getRegions().get(0).markRegion();
@@ -159,6 +174,5 @@ public class GuiController implements Initializable{
         solution.getRegions().get(24).markRegion();
         solution.getRegions().get(25).markRegion();
         updateBoard(solution);
-        System.out.println(solution.isSolved());
     }
 }

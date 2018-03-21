@@ -7,12 +7,9 @@ public enum Configuration {
 
     public static final int INITIAL_POPULATION_SIZE = 2048;
 
-    public int maximumNumberOfGenerations = 100_000;
-    public int maximumNumberOfStaleGenerations = 2_000;
-    public int populationSize = 2_048;
-    public int maxPopulationSize = 4096;
-    public int tournamentParticipants = 52;
-    public int rouletteLimit = 26;
+    public int MAX_POPULATION_SIZE = 4096;
+    public int TOURNAMENT_PARTICIPANTS = 52;
+    public int ROULETTE_LIMIT = 26;
 
     public static final int BORDER_SIZE = 3;
     public static final int NUMBER_OF_REGIONS = 28;

@@ -7,12 +7,15 @@ import java.util.ArrayList;
 public class Board {
 
     private ArrayList<Region> regions;
-
-    public int[][] getBoardRegions() {
-        return boardRegions;
-    }
-
     private int[][] boardRegions;
+
+    public ArrayList<Region> getRegions() { return regions; }
+
+    public int[][] getBoardRegions() { return boardRegions; }
+
+    public Board(){
+        initBoard();
+    }
 
     public Board(ArrayList<Boolean> genesForChild) {
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
@@ -23,8 +26,12 @@ public class Board {
         }
     }
 
-    public ArrayList<Region> getRegions() {
-        return regions;
+    public Board(Board board){
+        initBoard();
+        for(int i = 0; i<28; i++){
+            if(board.getRegions().get(i).isMarked())
+                regions.get(i).markRegion();
+        }
     }
 
     private void initBoard(){
@@ -32,18 +39,6 @@ public class Board {
         regions = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
         for(int i = 0; i< Configuration.NUMBER_OF_REGIONS; i++){
             regions.add(new Region(i, Configuration.BOARD_REGIONS));
-        }
-    }
-
-    public Board(){
-        initBoard();
-    }
-
-    public Board(Board board){
-        initBoard();
-        for(int i = 0; i<28; i++){
-            if(board.getRegions().get(i).isMarked())
-                regions.get(i).markRegion();
         }
     }
 

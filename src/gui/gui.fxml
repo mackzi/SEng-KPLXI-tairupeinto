@@ -15,37 +15,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="649.0" maxWidth="693.0" minHeight="600.0" minWidth="600.0" prefHeight="649.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiController">
+<Pane maxHeight="649.0" maxWidth="693.0" minHeight="600.0" minWidth="551.0" prefHeight="616.0" prefWidth="551.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiController">
    <children>
-      <HBox layoutX="230.0" layoutY="25.0">
+      <HBox layoutX="28.0" layoutY="19.0">
          <children>
              <ChoiceBox fx:id="cBoxSelection" layoutX="164.0" layoutY="25.0" prefHeight="25.0" prefWidth="120.0" />
              <ChoiceBox fx:id="cBoxCrossover" layoutX="269.0" layoutY="25.0" prefHeight="25.0" prefWidth="120.0" />
              <ChoiceBox fx:id="cBoxMutation" layoutX="359.0" layoutY="25.0" prefHeight="25.0" prefWidth="120.0" />
          </children>
       </HBox>
-      <HBox layoutX="40.0" layoutY="45.0" spacing="5.0">
-         <children>
-            <VBox>
-               <children>
-                  <RadioButton fx:id="eva" mnemonicParsing="false" selected="true" text="EVA">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="strategy" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="bt" mnemonicParsing="false" prefHeight="0.0" prefWidth="86.0" text="BACKTRACK" toggleGroup="$strategy" />
-               </children>
-            </VBox>
-            <VBox>
-               <children>
-                  <Button fx:id="runButton" layoutX="50.0" layoutY="25.0" mnemonicParsing="false" onAction="#execute" prefHeight="25.0" prefWidth="41.0" text="Run" />
-                  <Button fx:id="stopButton" disable="true" layoutX="101.0" layoutY="25.0" mnemonicParsing="false" onAction="#stop" text="Stop" />
-                  <Button fx:id="showSolution" mnemonicParsing="false" onAction="#showSolution" text="Show Solution" />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <GridPane layoutX="106.0" layoutY="130.0">
+      <GridPane layoutX="26.0" layoutY="104.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="450.0" prefWidth="450.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="25.0" prefWidth="25.0" />
@@ -335,7 +314,21 @@
             </GridPane>
          </children>
       </GridPane>
-      <Label fx:id="labelFitness" layoutX="230.0" layoutY="70.0" prefHeight="17.0" prefWidth="71.0" text="Fitness: " />
-      <Label fx:id="labelGeneration" layoutX="344.0" layoutY="70.0" text="Generation: " />
+      <Label fx:id="labelFitness" layoutX="398.0" layoutY="14.0" prefHeight="17.0" prefWidth="71.0" text="Fitness: " />
+      <Label fx:id="labelGeneration" layoutX="398.0" layoutY="36.0" text="Generation: " />
+      <HBox layoutX="28.0" layoutY="61.0" spacing="10.0">
+         <children>
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearBoard" text="Clear" />
+            <Button fx:id="showSolution" mnemonicParsing="false" onAction="#showSolution" text="Show Solution" />
+            <Button fx:id="runButton" mnemonicParsing="false" onAction="#execute" prefHeight="25.0" prefWidth="41.0" text="Run" />
+            <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#stop" text="Stop" />
+         </children>
+      </HBox>
+      <RadioButton fx:id="eva" layoutX="412.0" layoutY="65.0" mnemonicParsing="false" onAction="#showWarning" text="EVA">
+         <toggleGroup>
+            <ToggleGroup fx:id="strategy" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="bt" layoutX="296.0" layoutY="65.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="86.0" selected="true" text="BACKTRACK" toggleGroup="$strategy" />
    </children>
 </Pane>

@@ -1,29 +1,29 @@
 package backtrack;
 
 import base.Board;
-import config.Configuration;
 import gui.GuiController;
-import gui.Main;
 import javafx.application.Platform;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BacktrackHandler extends Thread{
 
     private GuiController guiController;
-    private Board board, heuboard;
+    private Board board, heuBoard;
     private int numberOfBTRegions;
+    private int btCounter;
 
     private ArrayList<Integer> backtrackRegions;
 
     public BacktrackHandler(GuiController guiController){
         setDaemon(true);
+        btCounter = 0;
         this.guiController = guiController;
         board = new Board();
-        heuboard = new Board();
+        heuBoard = new Board();
+        numberOfBTRegions = 28;
         backtrackRegions = new ArrayList<>();
         for(int i = 0; i<28; i++)
             backtrackRegions.add(i);
@@ -33,31 +33,38 @@ public class BacktrackHandler extends Thread{
     @Override
     public void run() {
         heuristic();
-        if(backtrack(0))
-            guiController.stop();
-        else
-            System.out.println("ERROR");
-    }
-
-    private void heuristic(){
-        Heuristic h = new Heuristic();
-        for (Integer i : h.doHeuristic()) {
-            heuboard.getRegions().get(i).markRegion();
-            backtrackRegions.remove(i);
-        }
-        board = heuboard;
-        numberOfBTRegions = backtrackRegions.size();
-        System.out.println(backtrackRegions);
-        System.out.println(backtrackRegions.size());
-    }
-
-    private boolean backtrack(int index){
-        Platform.runLater(() -> guiController.updateBoard(board));
+        backtrack(0);
+        Platform.runLater(() -> {guiController.updateBoard(board);
+                                guiController.stop();});
         try {
             Thread.sleep(50);
         } catch (InterruptedException ex) {
             Logger.getLogger(BacktrackHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    private void heuristic(){
+        Heuristic h = new Heuristic();
+        for (Integer i : h.doHeuristic()) {
+            heuBoard.getRegions().get(i).markRegion();
+            backtrackRegions.remove(i);
+        }
+        board = heuBoard;
+        numberOfBTRegions = backtrackRegions.size();
+    }
+
+    private boolean backtrack(int index){
+        btCounter++;
+        if(btCounter % 1000 == 0){
+            Platform.runLater(() -> guiController.updateBoard(board));
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BacktrackHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         int btIndex;
         if(board.isSolved())
             return true;
@@ -73,10 +80,8 @@ public class BacktrackHandler extends Thread{
                 else
                     board.getRegions().get(btIndex).unMarkRegion();
             }
-            if(backtrack(index+1))
-                return true;
+            return backtrack(index + 1);
         }
-        return false;
     }
 
     private boolean isColoringValid(int index, Board btBoard){

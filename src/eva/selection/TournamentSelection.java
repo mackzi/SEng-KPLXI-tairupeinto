@@ -12,8 +12,8 @@ public class TournamentSelection implements ISelection {
         ArrayList<Board> fighters = new ArrayList<>(); //selected Tournament participants (even)
         ArrayList<Board> finishedSacks = new ArrayList<>();
 
-        if (Boards.size() >= Configuration.instance.tournamentParticipants) { //if there are not enough Bags
-            for (int i = 0; i < Configuration.instance.tournamentParticipants; i++) { //select 52 Tournament participant
+        if (Boards.size() >= Configuration.instance.TOURNAMENT_PARTICIPANTS) { //if there are not enough Bags
+            for (int i = 0; i < Configuration.instance.TOURNAMENT_PARTICIPANTS; i++) { //select 52 Tournament participant
 
                 int randomFighter = Configuration.instance.random.nextInt(Boards.size()); //select random Bag
                 fighters.add(Boards.get(randomFighter));
@@ -23,7 +23,7 @@ public class TournamentSelection implements ISelection {
             Board fighter1;
             Board fighter2;
 
-            for (int i = 0; i < (Configuration.instance.tournamentParticipants / 2); i++) {
+            for (int i = 0; i < (Configuration.instance.TOURNAMENT_PARTICIPANTS / 2); i++) {
 
                 int randomInt1 = Configuration.instance.random.nextInt(fighters.size());
                 fighter1 = fighters.get(randomInt1);

@@ -13,13 +13,12 @@ import eva.selection.TournamentSelection;
 import java.util.ArrayList;
 
 public class EvaHandler implements Runnable{
-    GuiController guiController;
+    private GuiController guiController;
     private Thread evaThread;
+    private ArrayList<Board> population;
     private int generation;
     private int bestFitness;
     private int bestFitnessIndex;
-    private ArrayList<Board> population;
-
     private String selectionType;
     private String crossoverType;
     private String mutationType;
@@ -111,7 +110,7 @@ public class EvaHandler implements Runnable{
             population.addAll(crossover.doCrossover(parent1, parent2));
         }
         //MUTATION
-        IMutation mutation = new DisplacementMutation();
+        IMutation mutation;
 
         switch (mutationType){
             case "Displacement":
@@ -136,11 +135,10 @@ public class EvaHandler implements Runnable{
 
         population.add(mutation.doMutation(population.get(Configuration.instance.random.nextInt(0, population.size()-1))));
 
-        if(population.size() > Configuration.instance.maxPopulationSize){
+        if(population.size() > Configuration.instance.MAX_POPULATION_SIZE)
             doPest();
-        }
 
-        System.out.println("PopulationSize: " + population.size());
+        //System.out.println("PopulationSize: " + population.size());
         generation += 1;
         if(bestFitness == 0)
             evaThread.interrupt();
@@ -148,9 +146,9 @@ public class EvaHandler implements Runnable{
 
     private void doPest(){
         int sum = 0;
-        for (Board b: population) {
+        for (Board b: population)
             sum += b.evaluateFitness();
-        }
+
         sum = sum / population.size();
         for (int i = 0; i < population.size(); i++) {
             if(population.get(i).evaluateFitness() >= sum)

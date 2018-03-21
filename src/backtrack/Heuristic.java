@@ -7,9 +7,9 @@ import config.Configuration;
 import java.util.*;
 
 public class Heuristic {
-    Board board;
+    private Board board;
 
-    public Heuristic(){
+    Heuristic(){
         this.board = new Board();
     }
 
@@ -23,7 +23,7 @@ public class Heuristic {
         return result;
     }
 
-    public Set<Integer> doRowHeuristic(int row){
+    private Set<Integer> doRowHeuristic(int row){
 
         //Extract regions that belong to ROW from board
         Set<Integer> barAmounts = new TreeSet<>();
@@ -75,19 +75,16 @@ public class Heuristic {
             if(Collections.frequency(congruence, i) == testBoards.size())
                 result.add(i);
         }
-
-        System.out.println(result);
         return result;
     }
 
-    public Set<Integer> doColHeuristic(int col){
+    private Set<Integer> doColHeuristic(int col){
 
         //Extract regions that belong to col from board
         Set<Integer> barAmounts = new TreeSet<>();
         for(int i = 0; i< board.getBoardRegions().length; i++){
             barAmounts.add(board.getBoardRegions()[i][col]);
         }
-        //System.out.println(barAmounts.size());System.out.println(barAmounts.toArray()[4]);
 
         //evaluate Max Number of combinations and generate them
         double numberOfCombinations = Math.pow(2, barAmounts.size());
@@ -132,8 +129,6 @@ public class Heuristic {
             if(Collections.frequency(congruence, i) == testBoards.size())
                 result.add(i);
         }
-
-        System.out.println(result);
         return result;
     }
 }
