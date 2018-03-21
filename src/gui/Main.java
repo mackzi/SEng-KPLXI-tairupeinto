@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Pane pane= FXMLLoader.load(getClass().getResource("gui.fxml"));
         primaryStage.setTitle("KPLXI - Tairupeinto");
-        primaryStage.setScene(new Scene(pane, 600, 600));
+        primaryStage.setScene(new Scene(pane, 600, 650));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

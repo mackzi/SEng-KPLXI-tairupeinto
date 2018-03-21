@@ -4,6 +4,7 @@ import backtrack.BacktrackHandler;
 import base.Board;
 import base.Cell;
 import base.Region;
+import com.sun.xml.internal.ws.policy.spi.PolicyAssertionValidator;
 import config.Configuration;
 import eva.EvaHandler;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ public class GuiController implements Initializable{
     RadioButton eva, bt;
 
     @FXML
-    Button runButton, stopButton;
+    Button runButton, stopButton, showSolution;
 
     @FXML
     GridPane gridPane;
@@ -99,15 +100,19 @@ public class GuiController implements Initializable{
     @FXML
     public void execute() {
         runButton.setDisable(true);
-        //startEva();
-        startBacktrack();
+        stopButton.setDisable(false);
+        if(eva.isSelected())
+            startEva();
+        if(bt.isSelected())
+            startBacktrack();
     }
 
     @FXML
     public void stop() {
         runButton.setDisable(false);
-
-        updateBoard(new Board());
+        //updateBoard(new Board());
+        labelFitness.setText("Fitness: ");
+        labelGeneration.setText("Generation: ");
 
         if(executionType.equals("eva")){
             evaThread.interrupt();
@@ -117,13 +122,15 @@ public class GuiController implements Initializable{
             backtrackThread.interrupt();
             backtrackThread.stop();
         }
-
-
     }
 
     private void startEva(){
         executionType = "eva";
-        EvaHandler eva = new EvaHandler(this);
+
+        EvaHandler eva = new EvaHandler(this,
+                                    cBoxSelection.getValue(),
+                                    cBoxCrossover.getValue(),
+                                    cBoxMutation.getValue());
         evaThread = new Thread(eva);
         evaThread.start();
     }
@@ -133,5 +140,25 @@ public class GuiController implements Initializable{
         BacktrackHandler backtrack = new BacktrackHandler(this);
         backtrackThread = new Thread(backtrack);
         backtrackThread.start();
+    }
+
+    @FXML
+    private void showSolution() {
+        Board solution = new Board();
+        solution.getRegions().get(0).markRegion();
+        solution.getRegions().get(2).markRegion();
+        solution.getRegions().get(4).markRegion();
+        solution.getRegions().get(5).markRegion();
+        solution.getRegions().get(7).markRegion();
+        solution.getRegions().get(8).markRegion();
+        solution.getRegions().get(13).markRegion();
+        solution.getRegions().get(14).markRegion();
+        solution.getRegions().get(17).markRegion();
+        solution.getRegions().get(19).markRegion();
+        solution.getRegions().get(23).markRegion();
+        solution.getRegions().get(24).markRegion();
+        solution.getRegions().get(25).markRegion();
+        updateBoard(solution);
+        System.out.println(solution.isSolved());
     }
 }

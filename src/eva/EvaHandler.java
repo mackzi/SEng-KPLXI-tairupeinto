@@ -2,12 +2,11 @@ package eva;
 
 import base.Board;
 import config.Configuration;
-import eva.crossover.ICrossover;
-import eva.crossover.OnePointCrossover;
+import eva.crossover.*;
+import eva.mutation.*;
+import eva.selection.RouletteWheelSelection;
 import gui.GuiController;
 import javafx.application.Platform;
-import eva.mutation.DisplacementMutation;
-import eva.mutation.IMutation;
 import eva.selection.ISelection;
 import eva.selection.TournamentSelection;
 
@@ -21,11 +20,18 @@ public class EvaHandler implements Runnable{
     private int bestFitnessIndex;
     private ArrayList<Board> population;
 
-    public EvaHandler(GuiController guiController){
+    private String selectionType;
+    private String crossoverType;
+    private String mutationType;
+
+    public EvaHandler(GuiController guiController, String selectionType, String crossoverType, String mutationType){
         population = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
         this.guiController = guiController;
         generation = 0;
         bestFitness = 99;
+        this.selectionType = selectionType;
+        this.crossoverType = crossoverType;
+        this.mutationType = mutationType;
         initPopulation();
     }
 
@@ -63,11 +69,40 @@ public class EvaHandler implements Runnable{
 
         //SELECTION
         ArrayList<Board> selectedBoards;
-        ISelection selection = new TournamentSelection();
+        ISelection selection;
+        switch (selectionType){
+            case "Tournament":
+                selection = new TournamentSelection();
+                break;
+            case "RouletteWheel":
+                selection = new RouletteWheelSelection();
+                break;
+            default:
+                selection = new TournamentSelection();
+                break;
+        }
         selectedBoards = selection.doSelection(population);
 
         //CROSSOVER
-        ICrossover crossover = new OnePointCrossover();
+        ICrossover crossover;
+        switch (crossoverType){
+            case "OnePoint":
+                crossover = new OnePointCrossover();
+                break;
+            case "TwoPoint":
+                crossover = new TwoPointCrossover();
+                break;
+            case "K-Point":
+                crossover = new KPointCrossover();
+                break;
+            case "Uniform":
+                crossover = new UniformCrossover();
+                break;
+            default:
+                crossover = new OnePointCrossover();
+                break;
+        }
+
         for(int i = 0; i< selectedBoards.size()/2; i++) {
             Board parent1 = selectedBoards.get(Configuration.instance.random.nextInt(0, selectedBoards.size() - 1));
             selectedBoards.remove(parent1);
@@ -77,6 +112,28 @@ public class EvaHandler implements Runnable{
         }
         //MUTATION
         IMutation mutation = new DisplacementMutation();
+
+        switch (mutationType){
+            case "Displacement":
+                mutation = new DisplacementMutation();
+                break;
+            case "Exchange":
+                mutation = new ExchangeMutation();
+                break;
+            case "Insertion":
+                mutation = new InsertionMutation();
+                break;
+            case "Inversion":
+                mutation = new InversionMutation();
+                break;
+            case "Scramble":
+                mutation = new ScrambleMutation();
+                break;
+            default:
+                mutation = new DisplacementMutation();
+                break;
+        }
+
         population.add(mutation.doMutation(population.get(Configuration.instance.random.nextInt(0, population.size()-1))));
 
         if(population.size() > Configuration.instance.maxPopulationSize){
@@ -111,5 +168,4 @@ public class EvaHandler implements Runnable{
             }
         }
     }
-
 }
