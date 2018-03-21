@@ -4,7 +4,7 @@ import base.Board;
 import gui.GuiController;
 import javafx.application.Platform;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,7 +84,7 @@ public class BacktrackHandler extends Thread{
         }
     }
 
-    private boolean isColoringValid(int index, Board btBoard){
+    public boolean isColoringValid(int index, Board btBoard) {
         Board validCheckBoard = new Board(btBoard);
         validCheckBoard.getRegions().get(index).markRegion();
         return validCheckBoard.isValid();

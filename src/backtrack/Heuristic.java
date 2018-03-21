@@ -9,7 +9,7 @@ import java.util.*;
 public class Heuristic {
     private Board board;
 
-    Heuristic(){
+    public Heuristic() {
         this.board = new Board();
     }
 
