@@ -3,15 +3,17 @@ package test;
 import backtrack.BacktrackHandler;
 import backtrack.Heuristic;
 import base.Board;
+import config.Configuration;
+import eva.EvaHandler;
 import gui.GuiController;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ApplicationTest {
@@ -56,7 +58,41 @@ public class ApplicationTest {
 
     @Test
     public void testSolvedBoard() {
-
         assertTrue(solution.isSolved());
+    }
+
+    @Test
+    public void testIsBoardValid() {
+        assertTrue(solution.isValid());
+    }
+
+    @Test
+    public void testEvaluateFitness() {
+        assertEquals(0, solution.evaluateFitness());
+    }
+
+    @Test
+    public void testGetGenesFromBoard() {
+        ArrayList<Boolean> genes = new ArrayList<>();
+        Board parent = new Board();
+        parent.getRegions().get(0).markRegion();
+        genes.add(true);
+        for (int i = 1; i < 28; i++) {
+            genes.add(false);
+        }
+
+        assertEquals(genes, parent.getGenes());
+    }
+
+    @Test
+    public void testEvaluateCellCount() {
+        assertArrayEquals(Configuration.ROW_SOLUTION, solution.evaluateRowValues());
+        assertArrayEquals(Configuration.COL_SOLUTION, solution.evaluateColValues());
+    }
+
+    @Test
+    public void testInitEvaPopulation() {
+        EvaHandler eva = new EvaHandler(new GuiController(), "Tournament", "OnePoint", "Displacement");
+        assertEquals(Configuration.INITIAL_POPULATION_SIZE, eva.getPopulation().size());
     }
 }

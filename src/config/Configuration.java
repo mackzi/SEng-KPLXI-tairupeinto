@@ -3,13 +3,13 @@ package config;
 public enum Configuration {
     instance;
 
-    public MersenneTwisterFast random = new MersenneTwisterFast(System.currentTimeMillis());
+    public final MersenneTwisterFast random = new MersenneTwisterFast(System.currentTimeMillis());
 
     public static final int INITIAL_POPULATION_SIZE = 2048;
 
-    public int MAX_POPULATION_SIZE = 4096;
-    public int TOURNAMENT_PARTICIPANTS = 52;
-    public int ROULETTE_LIMIT = 26;
+    public final int MAX_POPULATION_SIZE = 4096;
+    public final int TOURNAMENT_PARTICIPANTS = 52;
+    public final int ROULETTE_LIMIT = 26;
 
     public static final int BORDER_SIZE = 3;
     public static final int NUMBER_OF_REGIONS = 28;

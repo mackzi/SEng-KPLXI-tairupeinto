@@ -7,19 +7,23 @@ import config.Configuration;
 import java.util.*;
 
 public class Heuristic {
-    private Board board;
+    private final Board board;
 
     public Heuristic() {
         this.board = new Board();
     }
 
+
+    /**
+     * This function returns regions on the board that are marked/black due to
+     * a small heuristic which looks for overlapping solutions and marks them.
+     */
     public Set<Integer> doHeuristic(){
         Set<Integer> result = new TreeSet<>();
         for(int i = 0; i< 9; i++){
             result.addAll(doRowHeuristic(i));
             result.addAll(doColHeuristic(i));
         }
-
         return result;
     }
 
@@ -30,7 +34,6 @@ public class Heuristic {
         for(int i = 0; i< board.getBoardRegions().length; i++){
             barAmounts.add(board.getBoardRegions()[row][i]);
         }
-        //System.out.println(barAmounts.size());System.out.println(barAmounts.toArray()[4]);
 
         //evaluate Max Number of combinations and generate them
         double numberOfCombinations = Math.pow(2, barAmounts.size());
@@ -43,7 +46,7 @@ public class Heuristic {
         for(int i = 0; i < combinations.size(); i++)
             testBoards.add(new Board());
 
-        //Mark spezific region from combinations
+        //Mark specific region from combinations
         for (int i = 0; i < testBoards.size(); i++) {
             for(int k = 0; k < barAmounts.size(); k++){
                 if(combinations.get(i).get(k))
@@ -51,7 +54,7 @@ public class Heuristic {
             }
         }
 
-        //identifiy unvalid boards
+        //identify unvalid boards
         ArrayList<Board> unValidBoards = new ArrayList<>();
         for (Board testBoard : testBoards) {
             if (testBoard.evaluateRowValues()[row] != Configuration.ROW_SOLUTION[row])
@@ -59,9 +62,10 @@ public class Heuristic {
         }
 
         //remove unvalid boards from testboard
-        for (Board unValidBoard : unValidBoards) testBoards.remove(unValidBoard);
+        for (Board unValidBoard : unValidBoards)
+            testBoards.remove(unValidBoard);
 
-        //look fpr congruence
+        //look for congruence
         ArrayList<Integer> congruence = new ArrayList<>();
         for (Board testBoard: testBoards) {
             for (Region r: testBoard.getRegions()) {
@@ -97,7 +101,7 @@ public class Heuristic {
         for(int i = 0; i < combinations.size(); i++)
             testBoards.add(new Board());
 
-        //Mark spezific region from combinations
+        //Mark specific region from combinations
         for (int i = 0; i < testBoards.size(); i++) {
             for(int k = 0; k < barAmounts.size(); k++){
                 if(combinations.get(i).get(k))
@@ -105,7 +109,7 @@ public class Heuristic {
             }
         }
 
-        //identifiy unvalid boards
+        //identify unvalid boards
         ArrayList<Board> unValidBoards = new ArrayList<>();
         for (Board testBoard : testBoards) {
             if (testBoard.evaluateColValues()[col] != Configuration.COL_SOLUTION[col])
@@ -113,9 +117,10 @@ public class Heuristic {
         }
 
         //remove unvalid boards from testboard
-        for (Board unValidBoard : unValidBoards) testBoards.remove(unValidBoard);
+        for (Board unValidBoard : unValidBoards)
+            testBoards.remove(unValidBoard);
 
-        //look fpr congruence
+        //look for congruence
         ArrayList<Integer> congruence = new ArrayList<>();
         for (Board testBoard: testBoards) {
             for (Region r: testBoard.getRegions()) {

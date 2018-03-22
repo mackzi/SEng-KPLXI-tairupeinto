@@ -7,7 +7,8 @@ import javafx.scene.paint.Color;
 public class Cell extends javafx.scene.layout.Pane{
 
     private boolean isMarked;
-    private int cols, rows;
+    private final int cols;
+    private final int rows;
     private int topBorder,rightBorder,bottomBorder,leftBorder;
 
     public int getCols() {

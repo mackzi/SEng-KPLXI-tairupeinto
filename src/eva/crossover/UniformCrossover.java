@@ -1,8 +1,9 @@
 package eva.crossover;
 
-import java.util.ArrayList;
 import base.Board;
 import config.Configuration;
+
+import java.util.ArrayList;
 
 
 public class UniformCrossover implements ICrossover {
@@ -11,11 +12,12 @@ public class UniformCrossover implements ICrossover {
 
     /**
      * Does a eva.crossover based on a coinflip on every gene
+     *
      * @param parent1
      * @param parent2
      * @return children
      */
-    public ArrayList<Board> doCrossover(Board parent1,Board parent2) {
+    public ArrayList<Board> doCrossover(Board parent1, Board parent2) {
         int iterations = 0;
         boolean noValidChild = true;
         ArrayList<Board> children = new ArrayList<>();
@@ -40,15 +42,15 @@ public class UniformCrossover implements ICrossover {
             Board child2 = new Board(genesForChild2);
 
             //if (child1.isValid() && child2.isValid()) {
-                children.add(child1);
-                children.add(child2);
-                noValidChild = false;
+            children.add(child1);
+            children.add(child2);
+            noValidChild = false;
             //}
 
             iterations++;
 
 
-        } while(noValidChild && iterations <= MAXNUMBER_OF_ITERATIONS);
+        } while (noValidChild && iterations <= MAXNUMBER_OF_ITERATIONS);
 
         return children;
     }

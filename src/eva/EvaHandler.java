@@ -4,27 +4,27 @@ import base.Board;
 import config.Configuration;
 import eva.crossover.*;
 import eva.mutation.*;
+import eva.selection.ISelection;
 import eva.selection.RouletteWheelSelection;
+import eva.selection.TournamentSelection;
 import gui.GuiController;
 import javafx.application.Platform;
-import eva.selection.ISelection;
-import eva.selection.TournamentSelection;
 
 import java.util.ArrayList;
 
 public class EvaHandler implements Runnable{
-    private GuiController guiController;
+    private final GuiController guiController;
     private Thread evaThread;
-    private ArrayList<Board> population;
+    private final ArrayList<Board> population;
     private int generation;
     private int bestFitness;
     private int bestFitnessIndex;
-    private String selectionType;
-    private String crossoverType;
-    private String mutationType;
+    private final String selectionType;
+    private final String crossoverType;
+    private final String mutationType;
 
     public EvaHandler(GuiController guiController, String selectionType, String crossoverType, String mutationType){
-        population = new ArrayList<>(Configuration.NUMBER_OF_REGIONS);
+        population = new ArrayList<>();
         this.guiController = guiController;
         generation = 0;
         bestFitness = 99;
@@ -32,6 +32,10 @@ public class EvaHandler implements Runnable{
         this.crossoverType = crossoverType;
         this.mutationType = mutationType;
         initPopulation();
+    }
+
+    public ArrayList<Board> getPopulation() {
+        return population;
     }
 
     @Override

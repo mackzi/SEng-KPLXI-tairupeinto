@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Region {
 
-    private ArrayList<Cell> cells;
+    private final ArrayList<Cell> cells;
     private boolean isMarked;
-    private int id;
+    private final int id;
 
     public boolean isMarked() {
         return isMarked;
@@ -32,14 +32,11 @@ public class Region {
 
     private Cell buildCell(int rows, int cols, int[][] boardRegions){
         Cell c = new Cell(rows, cols);
-        if (rows == 0)
-            c.drawBorderTop();
-        if (rows == 8)
-            c.drawBorderBottom();
-        if (cols == 0)
-            c.drawBorderLeft();
-        if (cols == 8)
-            c.drawBorderRight();
+        if (rows == 0) c.drawBorderTop();
+        if (rows == 8) c.drawBorderBottom();
+        if (cols == 0) c.drawBorderLeft();
+        if (cols == 8) c.drawBorderRight();
+
         if(rows < 8){
             if(boardRegions[rows][cols]!= boardRegions[rows+1][cols])
                 c.drawBorderBottom();

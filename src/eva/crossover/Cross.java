@@ -8,7 +8,7 @@ import java.util.Collections;
 
 class Cross {
 
-    private ArrayList<Board> children = new ArrayList<>();
+    private final ArrayList<Board> children = new ArrayList<>();
     private static final int MAXNUMBER_OF_ITERATIONS = 10000;
 
     public ArrayList<Board> crossover(int k, Board parent1, Board parent2) {

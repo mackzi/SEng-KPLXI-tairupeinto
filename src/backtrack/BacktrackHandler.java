@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 
 public class BacktrackHandler extends Thread{
 
-    private GuiController guiController;
-    private Board board, heuBoard;
+    private final GuiController guiController;
+    private final Board heuBoard;
+    private final ArrayList<Integer> backtrackRegions;
     private int numberOfBTRegions;
     private int btCounter;
-
-    private ArrayList<Integer> backtrackRegions;
+    private Board board;
 
     public BacktrackHandler(GuiController guiController){
         setDaemon(true);
@@ -28,7 +28,6 @@ public class BacktrackHandler extends Thread{
         for(int i = 0; i<28; i++)
             backtrackRegions.add(i);
     }
-
 
     @Override
     public void run() {
@@ -54,7 +53,7 @@ public class BacktrackHandler extends Thread{
         numberOfBTRegions = backtrackRegions.size();
     }
 
-    private boolean backtrack(int index){
+    private boolean backtrack(int step) {
         btCounter++;
         if(btCounter % 1000 == 0){
             Platform.runLater(() -> guiController.updateBoard(board));
@@ -69,18 +68,18 @@ public class BacktrackHandler extends Thread{
         if(board.isSolved())
             return true;
         else {
-            if(index < numberOfBTRegions)
-                btIndex = backtrackRegions.get(index);
+            if (step < numberOfBTRegions)
+                btIndex = backtrackRegions.get(step);
             else
                 return false;
             if(isColoringValid(btIndex, board)){
                 board.getRegions().get(btIndex).markRegion();
-                if(backtrack(index + 1))
+                if (backtrack(step + 1))
                     return true;
                 else
                     board.getRegions().get(btIndex).unMarkRegion();
             }
-            return backtrack(index + 1);
+            return backtrack(step + 1);
         }
     }
 

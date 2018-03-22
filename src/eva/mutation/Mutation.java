@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Mutation implements IMutation{
-    protected static int GENE_SIZE = Configuration.BORDER_SIZE;
+    protected static final int GENE_SIZE = Configuration.BORDER_SIZE;
     protected static final MersenneTwisterFast random = Configuration.instance.random; // new MersenneTwisterFast();
 
     boolean checkInput(int aLocation, int aSize) {
