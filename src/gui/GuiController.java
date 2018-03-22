@@ -127,6 +127,7 @@ public class GuiController implements Initializable{
                                     cBoxCrossover.getValue(),
                                     cBoxMutation.getValue());
         evaThread = new Thread(eva);
+        evaThread.setDaemon(true);
         evaThread.start();
     }
 
@@ -134,6 +135,7 @@ public class GuiController implements Initializable{
         executionType = "bt";
         BacktrackHandler backtrack = new BacktrackHandler(this);
         backtrackThread = new Thread(backtrack);
+        backtrackThread.setDaemon(true);
         backtrackThread.start();
     }
 
